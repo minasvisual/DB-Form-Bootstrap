@@ -1,7 +1,7 @@
 # DB-Form-Bootstrap
 PHP class that generate form fields and render with bootstrap tags (optionally).
 
-<?php 
+<pre>
 
 $this->load->library('db_form', array(), 'form'); 
 
@@ -84,4 +84,5 @@ echo $rtn['<field name>'];
  $btn_apply_config = array('name'=>'btn_apply', 'class'=>'btn btn-info', 'value'=>'Aplicar'); 
  $submit_config = array('label_tag'=>'div'); 
 */ 
-?> 
+
+</pre>
