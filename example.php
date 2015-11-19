@@ -25,13 +25,23 @@
 		include('db_form2.php');
 		$form = new Db_form;
 
-		$form->create(['nome'=>'Nome', 'email'=>'Email', 'senha'=>'Senha']);
+		$form->create(['name'=>'Name', 'email'=>'Email', 'pass'=>'Password']);
 
-		$qr = [ ['id_user'=>1, 'user_name'=>'Teste 1', 'user_level'=>'admin'],['id_user'=>2, 'user_name'=>'Teste 2', 'user_level'=>'admin'],['id_user'=>3, 'user_name'=>'Teste 3', 'user_level'=>'admin'], ];
-		$form->field('senha')->sort(1)->
-			type('dropdown')->options( 
-		$form->setOptions($qr, 'id_user', 'user_name') );
-		$form->field('nome')->sort(2)->type('empty')->value('<h2>My Content</h2>');
+		$qr = [ 
+			['id'=>1, 'user_name'=>'Test 1', 'user_level'=>'admin'],
+			['id'=>2, 'user_name'=>'Test 2', 'user_level'=>'admin'] 
+		];
+
+		$form->field('name')->sort(1)
+			->type('dropdown')
+			->options( $form->setOptions($qr, 'id', 'user_name') )
+			->attr( ['disabled'=>true] )
+			->value(2);
+
+		$form->field('email')
+			->sort(2)
+			->type('empty')
+			->value('<h2>My Content</h2>');
 
 		$form->render();
 
