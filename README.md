@@ -13,8 +13,8 @@ $form->render();
 
 Configuring field render (optional)
 <pre>
-//create form
-$form->create( array('name'=>'Name', 'email'=>'Email') ); 
+//create and filter form
+$form->create( array('name'=>'Name', 'email'=>'Email') )->filter( ['email'] ); 
 
 // Change field parameters | Change/Add Label text 
 $form->field('name')->label('Username'); 
@@ -38,6 +38,12 @@ $form->field('name')->config( array('parent_class'=>'col-md-12') );
 
 // Change field parameters | add before and after input content 
 $form->field('name')->content( array('before'=>'i will appear above input', 'after'=>'i will appear below input') ); 
+
+// Change field parameters | set a different sort number to field.
+$form->field('name')->sort(3);
+
+// Insert empty item
+$form->field('validation')->type('empty')->value('This text appers on input spot');
 </pre>
 
 Configuring global bootstrap render output vars
@@ -63,10 +69,39 @@ $form->fill( $qr );
 
 Other render forms
 <pre>
-// For default print a array with block input | optional parameter print(true|false) 
+// return all fields in array | optional parameter print(true|false) 
 $rtn = $form->render( <auto print(true|false)> ); 
-
 echo $rtn['<field name>']; 
+
+// render unique field
+$form->field('name')->getRender();
+
+// Render one or more fields without form tag | renderFields( array_fields, print(true(default)|false) )
+$form->renderFields(['name', 'email', 'password']);
+</pre>
+
+Helper methods
+<pre>
+//Create html tags | setHtml( tag, attributes, content )
+$form->setHtml('div', ['class'=>'col-md-12'], $form->render(false) );
+// produce
+<div class="col-md-12">
+.....
+</div>
+
+// filter elements | elements( array_keys, array_all, default_if_doesn't_exist )
+$form->elements( ['name', 'passwords'], ['name'=>'Bob', 'password'=>'da6s57', 'date'=>'2015-11-18'] );
+//produce
+array( 'name'=>'Bob', 'password'=>'da6s57' );
+
+//convert array to key => value by defined | setOptions( array, key_field, key_label )
+$arr = [
+	 [ 'id'=> 0, 'name'=>'Bob', 'password'=>'da6s57', 'date'=>'2015-11-18' ],
+	 [ 'id'=> 1, 'name'=>'Ted', 'password'=>'cscsds', 'date'=>'2015-11-19' ]
+]
+$form->field('users')->type('dropdown')->options( $form->setOptions( $arr, 'id', 'name' ) );
+//produce
+array( [ 0=>'Bob', 1=>'Ted'] )
 </pre>
 
 Public config vars
